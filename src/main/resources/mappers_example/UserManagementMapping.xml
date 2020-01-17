@@ -1,0 +1,1315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.authine.cloudpivot.ext.mapper.UserManagementMapper">
+
+	<resultMap id="UserManagementMap"
+		type="com.authine.cloudpivot.ext.vo.UserManagementVo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="userNo" property="userNo" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="creater" property="creater" jdbcType="VARCHAR" />
+		<result column="createdDeptId" property="createdDeptId"
+			jdbcType="VARCHAR" />
+		<result column="owner" property="owner" jdbcType="VARCHAR" />
+		<result column="ownerDeptId" property="ownerDeptId"
+			jdbcType="VARCHAR" />
+		<result column="createdTime" property="createdTime"
+			jdbcType="TIMESTAMP" />
+		<result column="modifier" property="modifier"
+			jdbcType="VARCHAR" />
+		<result column="modifiedTime" property="modifiedTime"
+			jdbcType="TIMESTAMP" />
+		<result column="workflowInstanceId"
+			property="workflowInstanceId" jdbcType="VARCHAR" />
+		<result column="sequenceNo" property="sequenceNo"
+			jdbcType="VARCHAR" />
+		<result column="sequenceStatus" property="sequenceStatus"
+			jdbcType="VARCHAR" />
+		<result column="ownerDeptQueryCode"
+			property="ownerDeptQueryCode" jdbcType="VARCHAR" />
+		<result column="businessCategory" property="businessCategory"
+			jdbcType="VARCHAR" />
+		<result column="userName" property="userName"
+			jdbcType="VARCHAR" />
+		<result column="userArea" property="userArea"
+			jdbcType="VARCHAR" />
+		<result column="accessAddress" property="accessAddress"
+			jdbcType="VARCHAR" />
+		<result column="accountingCompany" property="accountingCompany"
+			jdbcType="VARCHAR" />
+		<result column="bandwidthType" property="bandwidthType"
+			jdbcType="VARCHAR" />
+		<result column="userIndustry" property="userIndustry"
+			jdbcType="VARCHAR" />
+		<result column="connectionRate" property="connectionRate"
+			jdbcType="DECIMAL" />
+		<result column="zxsgfl" property="zxsgfl" jdbcType="VARCHAR" />
+		<result column="firstOpeningDate" property="firstOpeningDate"
+			jdbcType="TIMESTAMP" />
+		<result column="maturityDate" property="maturityDate"
+			jdbcType="TIMESTAMP" />
+		<result column="itemNumber" property="itemNumber"
+			jdbcType="VARCHAR" />
+		<result column="customerNo" property="customerNo"
+			jdbcType="BIGINT" />
+		<result column="customerName" property="customerName"
+			jdbcType="VARCHAR" />
+		<result column="userStatus" property="userStatus"
+			jdbcType="VARCHAR" />
+		<result column="businessContact" property="businessContact"
+			jdbcType="VARCHAR" />
+		<result column="salesDepartments" property="salesDepartments"
+			jdbcType="VARCHAR" />
+		<result column="salesPersonnel" property="salesPersonnel"
+			jdbcType="VARCHAR" />
+		<result column="customerServices" property="customerServices"
+			jdbcType="VARCHAR" />
+		<result column="balance" property="balance" jdbcType="DECIMAL" />
+
+	</resultMap>
+
+	<!-- 用户缴费操作查询 -->
+	<resultMap id="UserPaymentBillMap"
+		type="com.authine.cloudpivot.ext.queryVo.UserPaymentBillQueryVo">
+		<id column="userNo" property="userNo" />
+		<result column="userName" property="userName" />
+		<result column="balance" property="balance" />
+		<result column="businessType" property="businessType" />
+		<result column="dept" property="dept" />
+		<result column="conModeCode" property="conModeCode" />
+		<result column="serviceMan" property="serviceMan" />
+		<result column="servicePhone" property="servicePhone" />
+		<result column="customerNo" property="customerNo" />
+		<result column="itemNumber" property="itemNumber" />
+		<result column="customerName" property="customerName" />
+		<result column="userStatus" property="userStatus" />
+		<result column="bandwidthType" property="bandwidthType" />
+		<result column="firstOpeningDate" property="firstOpeningDate" />
+		<result column="maturityDate" property="maturityDate" />
+		<result column="accountingCompany" property="accountingCompany" />
+		<result column="linkman" property="linkman" />
+		<result column="linkPhone" property="linkPhone" />
+	</resultMap>
+
+	<!-- 用户缴费操作中根据编号关联用户信息 -->
+	<resultMap id="findUserInfoMap"
+		type="com.authine.cloudpivot.ext.queryVo.UserPaymentLinkInfoQueryVo">
+		<id column="userNo" property="userNo" />
+		<result column="userName" property="userName" />
+		<result column="balance" property="balance" />
+		<result column="businessCategory" property="businessCategory" />
+		<result column="userStatus" property="userStatus" />
+		<result column="firstOpeningDate" property="firstOpeningDate" />
+		<result column="maturityDate" property="maturityDate" />
+		<result column="accessAddress" property="accessAddress" />
+		<result column="customerNameHide" property="customerNameHide" />
+		<result column="salesDepartments" property="salesDepartments" />
+		<result column="serviceMan" property="serviceMan" />
+		<result column="servicePhone" property="servicePhone" />
+		<result column="linkman" property="linkman" />
+		<result column="linkPhone" property="linkPhone" />
+		<result column="conModeCode" property="conModeCode" />
+		<result column="onSpeedType" property="onSpeedType" />
+		<result column="conSpeed" property="conSpeed" />
+		<result column="accountingCompany" property="accountingCompany" />
+		<result column="customerNo" property="customerNo" />
+		<result column="customerName" property="customerName" />
+		<result column="dept" property="dept" />
+		<result column="itemNumber" property="itemNumber" />
+
+	</resultMap>
+
+
+	<!-- 用户缴费操作中根据编号查询用户账单 -->
+	<resultMap id="findUserbillsMap"
+		type="com.authine.cloudpivot.ext.vo.BillVo">
+		<id column="contractId" property="contractId" />
+		<result column="feeInformationId" property="feeInformationId" />
+		<result column="contractAppType" property="contractAppType" />
+		<result column="businessType" property="businessType" />
+		<result column="contractNo" property="contractNo" />
+		<result column="userNo" property="userNo" />
+		<result column="userName" property="userName" />
+		<result column="dept" property="dept" />
+		<result column="onSpeedType" property="onSpeedType" />
+		<result column="conSpeed" property="conSpeed" />
+		<result column="accessAddress" property="accessAddress" />
+		<result column="advanceAccount" property="advanceAccount" />
+		<result column="accountingCompany" property="accountingCompany" />
+		<result column="maturityDate" property="maturityDate" />
+		<result column="accrualDate" property="accrualDate" />
+		<result column="feeItemCode" property="feeItemCode" />
+		<result column="billingStartDate" property="billingStartDate" />
+		<result column="billingEndDate" property="billingEndDate" />
+		<result column="costAmount" property="costAmount" />
+		<result column="amountWrittenOff" property="amountWrittenOff" />
+		<result column="billingStandard" property="billingStandard" />
+		<result column="billingCycle" property="billingCycle" />
+		<result column="billingDays" property="billingDays" />
+		<result column="presentDays" property="presentDays" />
+		<result column="status" property="status" />
+		<result column="operator" property="operator" />
+		<result column="auditor" property="auditor" />
+		<result column="auditTime" property="auditTime" />
+		<result column="auditStatus" property="auditStatus" />
+		<result column="remark" property="remark" />
+		<result column="isWrittenOff" property="isWrittenOff" />
+		<result column="userBalance" property="userBalance" />
+		<result column="billNo" property="billNo" />
+		<result column="expenseTypeName" property="expenseTypeName" />
+		<result column="currentUnsettledAmount"
+			property="currentUnsettledAmount" />
+		<result column="createdTime" property="createdTime" />
+		<result column="cancellationAmount"
+			property="cancellationAmount" />
+		<result column="reasonForCancellation"
+			property="reasonForCancellation" />
+
+
+	</resultMap>
+
+
+	<!-- 根据用户编号查询建账表单中用户信息 -->
+	<resultMap id="findAccountCreationMap"
+		type="com.authine.cloudpivot.ext.queryVo.AccountCreationQueryVo">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="creater" property="creater" />
+		<result column="createdDeptId" property="createdDeptId" />
+		<result column="owner" property="owner" />
+		<result column="ownerDeptId" property="ownerDeptId" />
+		<result column="createdTime" property="createdTime" />
+		<result column="modifier" property="modifier" />
+		<result column="modifiedTime" property="modifiedTime" />
+		<result column="workflowInstanceId"
+			property="workflowInstanceId" />
+		<result column="sequenceNo" property="sequenceNo" />
+		<result column="sequenceStatus" property="sequenceStatus" />
+		<result column="ownerDeptQueryCode"
+			property="ownerDeptQueryCode" />
+		<result column="userNumber" property="userNumber" />
+		<result column="customerNameK" property="customerNameK" />
+		<result column="departmentalAttribution"
+			property="departmentalAttribution" />
+		<result column="customerNumber" property="customerNumber" />
+		<result column="userName" property="userName" />
+		<result column="numberOfAccess" property="numberOfAccess" />
+		<result column="postalAddress" property="postalAddress" />
+		<result column="projectNum" property="projectNum" />
+		<result column="conSpeed" property="conSpeed" />
+		<result column="userStatus" property="userStatus" />
+		<result column="businessType" property="businessType" />
+		<result column="accountingCompany" property="accountingCompany" />
+		<result column="salesDepartment" property="salesDepartment" />
+		<result column="startDate" property="startDate" />
+		<result column="endDate" property="endDate" />
+		<result column="accessAddress" property="accessAddress" />
+		<result column="remarksInformation"
+			property="remarksInformation" />
+		<result column="defaultBillApproval"
+			property="defaultBillApproval" />
+	</resultMap>
+
+
+	<!-- 根据id查询建账表单中用户账单列表 -->
+	<resultMap id="findAccountCreationBillsMap"
+		type="com.authine.cloudpivot.ext.queryVo.AccountCreationBillsQueryVo">
+
+
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="creater" property="creater" />
+		<result column="createdDeptId" property="createdDeptId" />
+		<result column="owner" property="owner" />
+		<result column="ownerDeptId" property="ownerDeptId" />
+		<result column="createdTime" property="createdTime" />
+		<result column="modifier" property="modifier" />
+		<result column="modifiedTime" property="modifiedTime" />
+		<result column="workflowInstanceId"
+			property="workflowInstanceId" />
+		<result column="sequenceNo" property="sequenceNo" />
+		<result column="sequenceStatus" property="sequenceStatus" />
+		<result column="ownerDeptQueryCode"
+			property="ownerDeptQueryCode" />
+		<result column="costTypes" property="costTypes" />
+		<result column="parentId" property="parentId" />
+		<result column="startBillingDate" property="startBillingDate" />
+		<result column="billingEndDate" property="billingEndDate" />
+		<result column="amountOfBill" property="amountOfBill" />
+		<result column="dateOfReceivables" property="dateOfReceivables" />
+		<result column="accountingCompanys"
+			property="accountingCompanys" />
+		<result column="giftDays" property="giftDays" />
+	</resultMap>
+
+
+	<!-- 批量编辑发票多条件查询用户信息 -->
+	<resultMap id="findUserInfoInBatchEditInvoiceMap"
+		type="com.authine.cloudpivot.ext.queryVo.BatchEditInvoiceQueryrVo">
+		<id column="userNo" property="userNo" />
+		<result column="customerName" property="customerName" />
+		<result column="userName" property="userName" />
+		<result column="dept" property="dept" />
+		<result column="accountingCompany" property="accountingCompany" />
+		<result column="amountOfSingleCharge"
+			property="amountOfSingleCharge" />
+		<result column="createdTime" property="createdTime" />
+		<result column="invoiceNumber" property="invoiceNumber" />
+		<result column="invoiceType" property="invoiceType" />
+		<result column="dateOfInvoice" property="dateOfInvoice" />
+		<result column="voucherNumber" property="voucherNumber" />
+		<result column="remarksInformation"
+			property="remarksInformation" />
+		<result column="billNo" property="billNo" />
+		<result column="customerNo" property="customerNo" />
+		<result column="paymentType" property="paymentType" />
+		<result column="businessType" property="businessType" />
+	</resultMap>
+
+	<!-- 添加费用记录明细 -->
+	<resultMap id="addOperationDetailsMap"
+		type="com.authine.cloudpivot.ext.vo.RecordSheetVo">
+		<id column="userNo" property="userNo" />
+		<result column="invoiceNumber" property="invoiceNumber" />
+		<result column="voucherNumber" property="voucherNumber" />
+		<result column="recordNumber" property="recordNumber" />
+		<result column="operationTime" property="operationTime" />
+		<result column="customerName" property="customerName" />
+		<result column="userName" property="userName" />
+		<result column="firstOpeningDate" property="firstOpeningDate" />
+		<result column="userStatus" property="userStatus" />
+		<result column="businessType" property="businessType" />
+		<result column="bandwidthType" property="bandwidthType" />
+		<result column="rate" property="rate" />
+		<result column="salesDepartment" property="salesDepartment" />
+		<result column="accountingCompany" property="accountingCompany" />
+		<result column="computerRoomLocation"
+			property="computerRoomLocation" />
+		<result column="nodeNumber" property="nodeNumber" />
+		<result column="nodeName" property="nodeName" />
+		<result column="invoice" property="invoice" />
+		<result column="operationtype" property="operationtype" />
+		<result column="operatingAmount" property="operatingAmount" />
+		<result column="balance" property="balance" />
+		<result column="costType" property="costType" />
+		<result column="paymentType" property="paymentType" />
+		<result column="billNumber" property="billNumber" />
+		<result column="invoiceType" property="invoiceType" />
+		<result column="dateOfInvoice" property="dateOfInvoice" />
+		<result column="accountStartTime" property="accountStartTime" />
+		<result column="accountEndTime" property="accountEndTime" />
+		<result column="operator" property="operator" />
+		<result column="sale" property="sale" />
+		<result column="customerService" property="customerService" />
+		<result column="remarks" property="remarks" />
+	</resultMap>
+
+	<!-- 添加费用记录明细 -->
+	<resultMap id="findRecordInfoMap"
+		type="com.authine.cloudpivot.ext.vo.RecordSheetVo">
+		<id column="userNo" property="userNo" />
+		<result column="invoiceNumber" property="invoiceNumber" />
+		<result column="voucherNumber" property="voucherNumber" />
+		<result column="recordNumber" property="recordNumber" />
+		<result column="operationTime" property="operationTime" />
+		<result column="customerName" property="customerName" />
+		<result column="userName" property="userName" />
+		<result column="firstOpeningDate" property="firstOpeningDate" />
+		<result column="userStatus" property="userStatus" />
+		<result column="businessType" property="businessType" />
+		<result column="bandwidthType" property="bandwidthType" />
+		<result column="rate" property="rate" />
+		<result column="salesDepartment" property="salesDepartment" />
+		<result column="accountingCompany" property="accountingCompany" />
+		<result column="computerRoomLocation"
+			property="computerRoomLocation" />
+		<result column="nodeNumber" property="nodeNumber" />
+		<result column="nodeName" property="nodeName" />
+		<result column="invoice" property="invoice" />
+		<result column="operationtype" property="operationtype" />
+		<result column="operatingAmount" property="operatingAmount" />
+		<result column="balance" property="balance" />
+		<result column="costType" property="costType" />
+		<result column="paymentType" property="paymentType" />
+		<result column="billNumber" property="billNumber" />
+		<result column="invoiceType" property="invoiceType" />
+		<result column="dateOfInvoice" property="dateOfInvoice" />
+		<result column="accountStartTime" property="accountStartTime" />
+		<result column="accountEndTime" property="accountEndTime" />
+		<result column="operator" property="operator" />
+		<result column="sale" property="sale" />
+		<result column="customerService" property="customerService" />
+		<result column="remarks" property="remarks" />
+	</resultMap>
+
+
+	<!-- 批量收费中查询 -->
+	<resultMap id="BulkChargingQueryMap"
+		type="com.authine.cloudpivot.ext.queryVo.BulkChargingQueryVo">
+		<id column="userNo" property="userNo" />
+		<result column="itemNumber" property="itemNumber" />
+		<result column="userName" property="userName" />
+		<result column="businessType" property="businessType" />
+		<result column="userStatus" property="userStatus" />
+		<result column="customerName" property="customerName" />
+		<result column="balance" property="balance" />
+		<result column="accountingCompany" property="accountingCompany" />
+		<result column="connectionMode" property="connectionMode" />
+		<result column="bandwidthType" property="bandwidthType" />
+		<result column="customerServices" property="customerServices" />
+		<result column="kfMobilePhone" property="kfMobilePhone" />
+		<result column="yhMobilePhone" property="yhMobilePhone" />
+		<result column="contactPerson" property="contactPerson" />
+		<result column="firstOpeningDate" property="firstOpeningDate" />
+		<result column="maturityDate" property="maturityDate" />
+		<result column="accountingDepartment"
+			property="accountingDepartment" />
+
+	</resultMap>
+
+	<!-- 添加建帐表单用户信息到用户管理表单中 -->
+	<insert id="AddUserInfo"
+		parameterType="com.authine.cloudpivot.ext.queryVo.AccountCreationQueryVo">
+		INSERT INTO ${tableName1}(
+		id,name,creater,createdDeptId,owner,ownerDeptId,createdTime,modifier,modifiedTime,workflowInstanceId,
+		sequenceNo,sequenceStatus,ownerDeptQueryCode,
+		customerNo, customerName,
+		userNo,userName,
+		itemNumber,connectionRate,
+		userStatus,accountingCompany,
+		salesDepartments,firstOpeningDate,
+		maturityDate
+		) VALUES(
+		#{id},#{name},#{creater},#{createdDeptId},#{owner},#{ownerDeptId},#{createdTime},
+		#{modifier},#{modifiedTime},#{workflowInstanceId},#{sequenceNo},#{sequenceStatus},#{ownerDeptQueryCode},
+		#{customerNumber}, #{customerNameK},
+		#{userNumber},#{userName},
+		#{projectNum},#{conSpeed},
+		#{userStatus},#{accountingCompany},
+		#{salesDepartment},#{startDate},
+		#{endDate}
+		)
+	</insert>
+
+
+	<!-- 添加建帐表单用户账单到账单表单中 -->
+	<insert id="AddUserBills"
+		parameterType="com.authine.cloudpivot.ext.queryVo.AccountCreationBillsQueryVo">
+		INSERT INTO ${tableName1}(
+		id,name,creater,createdDeptId,
+		owner,ownerDeptId,createdTime,modifier,
+		modifiedTime,workflowInstanceId,sequenceNo,sequenceStatus,
+		ownerDeptQueryCode,feeItemCode,billingStartDate, billingEndDate,
+		costAmount,accrualDate,accountingCompany,presentDays,
+		userNo,userName,businessType,accessAddress,
+		remark
+		) VALUES(
+		#{id},#{name},#{creater},#{createdDeptId},
+		#{owner},#{ownerDeptId},#{createdTime},#{modifier},
+		#{modifiedTime},#{workflowInstanceId},#{sequenceNo},#{sequenceStatus},
+		#{ownerDeptQueryCode},#{costTypes},#{startBillingDate},
+		#{billingEndDate},
+		#{amountOfBill},#{dateOfReceivables},#{accountingCompanys},#{giftDays},
+		#{userNo},#{userName},#{businessType},#{accessAddress},
+		#{remark}
+		)
+	</insert>
+
+
+	<!-- 存入批量收费记录信息 -->
+	<insert id="addBulkChargingRecord"
+		parameterType="com.authine.cloudpivot.ext.queryVo.BatchChargingRecordQueryrVo">
+		INSERT INTO ${tableName1}(
+		invoiceType,dateOfInvoice,paymentType,voucherNumber,
+		invoiceNumber,amountOfSingleCharge,userNo,remarksInformation,createdTime
+		) VALUES(
+		#{invoiceType},#{dateOfInvoice},#{paymentType},#{voucherNumber},
+		#{invoiceNumber},#{amountOfSingleCharge},#{userNo},#{remarksInformation},#{createdTime}
+		)
+	</insert>
+
+	<!-- 根据客户编号查询对应的用户信息列表 -->
+	<select id="queryUserListByCustomerNo"
+		parameterType="com.authine.cloudpivot.ext.queryVo.UserManagementQueryVo"
+		resultMap="UserManagementMap">
+		select
+		u.id,
+		u.userNo,
+		u.userName,
+		u.customerNo,
+		c.customerName,
+		b.value businessCategory,
+		od.name salesDepartments,
+		CONCAT(replace(JSON_EXTRACT(u.userArea,'$.provinceName'), '"', ''),
+		'/',replace(JSON_EXTRACT(u.userArea,'$.cityName'), '"', ''),'/',
+		replace(JSON_EXTRACT(u.userArea,'$.districtName'), '"', '')) userArea,
+		us.value userStatus
+		from ${tableName1} u
+		left join ${tableName2} c on
+		c.customerNo = u.customerNo
+		left join ${tableName3} b on b.id =
+		u.businessCategory
+		left join ${tableName4} us on us.id = u.userStatus
+		left join h_org_department od on od.id =
+		replace(JSON_EXTRACT(u.salesDepartments,'$[0].id'),'"','')
+		where
+		u.customerNo = #{customerNo}
+	</select>
+
+	<!-- 查询用户信息列表 此接口暂时不用做了 -->
+	<select id="queryUserManagementList"
+		parameterType="com.authine.cloudpivot.ext.queryVo.UserManagementQueryVo"
+		resultMap="UserManagementMap">
+		select
+		u.id,
+		u.userNo,
+		u.userName,
+		u.customerNo,
+		c.customerName,
+		u.firstOpeningDate,
+		u.maturityDate,
+		b.value businessCategory,
+		od.name
+		salesDepartments,
+		CONCAT(replace(JSON_EXTRACT(u.userArea,'$.provinceName'), '"', ''),
+		'/',replace(JSON_EXTRACT(u.userArea,'$.cityName'), '"', ''),'/',
+		replace(JSON_EXTRACT(u.userArea,'$.districtName'), '"', '')) userArea,
+		replace(JSON_EXTRACT(u.userArea,'$.address'), '"', '') accessAddress,
+		us.value userStatus,
+		u.connectionRate,
+		u.bandwidthType
+		from ${tableName1}
+		u
+		left join ${tableName2} c on c.customerNo = u.customerNo
+		left join
+		${tableName3} b on b.id = u.businessCategory
+		left join ${tableName4} us
+		on us.id = u.userStatus
+		left join h_org_department od on od.id =
+		replace(JSON_EXTRACT(u.salesDepartments,'$[0].id'),'"','')
+		where 1=1
+		<if test="customerNo != null and customerNo != ''">
+			and c.customerNo like CONCAT('%',#{customerNo},'%')
+		</if>
+		<if test="customerName != null and customerName != ''">
+			and c.customerName like CONCAT('%',#{customerName},'%')
+		</if>
+		<if test="userNo != null and userNo != ''">
+			and u.userNo like CONCAT('%',#{userNo},'%')
+		</if>
+		<if test="userName != null and userName != ''">
+			and u.userName like CONCAT('%',#{userName},'%')
+		</if>
+	</select>
+
+	<!-- 用户缴费操作查询 -->
+	<select id="findUserPaymentBills"
+		parameterType="com.authine.cloudpivot.ext.queryVo.UserPaymentBillQueryVo"
+		resultMap="UserPaymentBillMap">
+		select
+		b.userNo AS userNo,
+		b.userName AS userName,
+		bu.value AS
+		businessType,
+		de.name AS
+		dept,
+		b.status AS status,
+		u.customerNo AS
+		customerNo,
+		u.itemNumber AS
+		itemNumber,
+		u.balance AS balance,
+		cu.name AS
+		customerName,
+		us.value AS
+		userStatus,
+		kd.value AS bandwidthType,
+		u.firstOpeningDate AS
+		firstOpeningDate,
+		u.maturityDate AS maturityDate,
+		j.value AS
+		conModeCode,
+		user.name AS serviceMan,
+		c.ServicePhone AS
+		servicePhone,
+		c.linkman AS
+		linkman,
+		c.linkPhone AS
+		linkPhone,
+		ht.value AS
+		accountingCompany
+		from ${tableName8} b
+		left join
+		${tableName1} u on
+		b.userNo
+		= u.userNo
+		left join ${tableName2} c on c.id
+		= b.contractId
+		left
+		join
+		${tableName3} bu on b.businessType = bu.Id
+		left
+		join ${tableName4} j
+		on
+		c.ConModeCode = j.Id
+		left join ${tableName5} cu
+		on u.customerName =
+		cu.Id
+		left join ${tableName6} us on u.userStatus =
+		us.Id
+		left join
+		${tableName7} kd on u.bandwidthType = kd.Id
+		left join
+		${tableName9} ht
+		on
+		u.accountingCompany = ht.Id
+		left join
+		h_org_department
+		de on de.Id =
+		replace(JSON_EXTRACT(b.dept,'$[0].id'),'"','')
+		left join
+		h_org_user user
+		on user.Id =
+		replace(JSON_EXTRACT(c.serviceMan,'$[0].id'),'"','')
+		where
+		1=1
+		<if test="userNo != null and userNo != ''">
+			and b.userNo like CONCAT('%',#{userNo},'%')
+		</if>
+		<if test="userName != null and userName != ''">
+			and b.userName like CONCAT('%',#{userName},'%')
+		</if>
+
+		<if test="customerNo != null and customerNo != ''">
+			and u.customerNo like CONCAT('%',#{customerNo},'%')
+		</if>
+		<if test="customerName != null and customerName != ''">
+			and cu.name like CONCAT('%',#{customerName},'%')
+		</if>
+		<if test="businessType != null and businessType != ''">
+			and bu.value = #{businessType}
+		</if>
+		<if test="dept != null and dept != ''">
+			and de.name = #{dept}
+		</if>
+		<if test="status != null and status != ''">
+			and b.status = #{status}
+		</if>
+		<if test="bandwidthType != null and bandwidthType != ''">
+			and kd.value = #{bandwidthType}
+		</if>
+		<if test="userStatus != null and userStatus != ''">
+			and us.value = #{userStatus}
+		</if>
+		<if test="conModeCode != null and conModeCode != ''">
+			and j.value = #{conModeCode}
+		</if>
+		<if test="accountingCompany != null and accountingCompany != ''">
+			and ht.value = #{accountingCompany}
+		</if>
+		GROUP BY b.userNo
+	</select>
+
+	<update id="updateUserName" parameterType="java.util.List">
+		UPDATE ${tableName1} SET userNmae = #{userNmae} WHERE userNo IN
+		<foreach collection="userNoList" item="userNoList"
+			separator="," open="(" close=")">
+			#{userNoList}
+		</foreach>
+	</update>
+
+
+	<!-- 用户缴费操根据用户编号关联用户信息 -->
+	<select id="findPaymentLinkInfoByUserNo"
+		parameterType="com.authine.cloudpivot.ext.queryVo.UserPaymentLinkInfoQueryVo"
+		resultMap="findUserInfoMap">
+		select
+		us.userNo AS userNo,
+		us.userName AS userName,
+		us.balance AS balance,
+		bu.value
+		AS businessCategory,
+		st.value AS
+		userStatus,
+		us.firstOpeningDate
+		AS firstOpeningDate,
+		us.maturityDate AS
+		maturityDate,
+		de.name AS salesDepartments,
+		ht.value AS
+		accountingCompany,
+		us.customerNo AS customerNo,
+		cu.customerName AS
+		customerName,
+		us.itemNumber AS itemNumber,
+		co.AccessAddress AS
+		accessAddress,
+		co.CustomerNameHide AS
+		customerNameHide,
+		user.name AS
+		serviceMan,
+		co.ServicePhone AS
+		servicePhone,
+		co.linkman AS linkman,
+		co.linkPhone AS linkPhone,
+		jr.value
+		AS conModeCode,
+		kd.value AS
+		onSpeedType,
+		co.ConSpeed AS conSpeed,
+		de.name
+		AS dept
+		from ${tableName1}
+		us
+		left join ${tableName2} bi on bi.userNo =
+		us.userNo
+		left join
+		${tableName3} co on co.id = bi.contractId
+		left join
+		${tableName4} bu on
+		us.businessCategory = bu.Id
+		left join ${tableName5}
+		st on us.userStatus
+		= st.Id
+		left join ${tableName6} ht on
+		us.accountingCompany = ht.Id
+		left
+		join ${tableName7} cu on
+		us.customerName = cu.Id
+		left join
+		${tableName8}
+		jr on co.ConModeCode =
+		jr.Id
+		left join ${tableName9} kd
+		on co.OnSpeedType
+		= kd.Id
+		left join
+		h_org_department de on de.Id =
+		replace(JSON_EXTRACT(us.salesDepartments,'$[0].id'),'"','')
+		left join
+		h_org_user user on user.Id =
+		replace(JSON_EXTRACT(co.serviceMan,'$[0].id'),'"','')
+		where
+		us.userNo =
+		#{userNo}
+
+
+	</select>
+
+	<!-- 根据用户编号及销账状态查询用户账单列表 -->
+	<select id="findUserBillsByUserNo"
+		parameterType="com.authine.cloudpivot.ext.vo.BillVo"
+		resultMap="findUserbillsMap">
+		select
+		bi.userNo AS userNo,
+		bi.billNo AS billNo,
+		fy.value AS feeItemCode,
+		bi.expenseTypeName AS expenseTypeName,
+		bi.billingStartDate AS
+		billingStartDate,
+		bi.billingEndDate AS
+		billingEndDate,
+		bi.accrualDate AS
+		accrualDate,
+		bi.costAmount AS
+		costAmount,
+		bi.amountWrittenOff AS
+		amountWrittenOff,
+		bi.currentUnsettledAmount AS currentUnsettledAmount,
+		bi.createdTime AS
+		createdTime,
+		bi.auditStatus AS auditStatus,
+		bi.auditTime AS auditTime,
+		user.name AS auditor,
+		bi.cancellationAmount
+		AS cancellationAmount,
+		bi.reasonForCancellation AS
+		reasonForCancellation
+		from ${tableName1} bi
+		left join ${tableName2} fy
+		on bi.feeItemCode = fy.id
+		left join
+		h_org_user user on user.Id =
+		bi.auditor
+		where
+		userNo = #{userNo}
+		and
+		isWrittenOff =
+		#{isWrittenOff}
+
+	</select>
+
+	<!-- 根据用户编号查询建账表单中用户信息 -->
+	<select id="findAccountCreationByUserNumber"
+		parameterType="com.authine.cloudpivot.ext.queryVo.AccountCreationQueryVo"
+		resultMap="findAccountCreationMap">
+		select
+		*
+		from
+		${tableName1}
+		where
+		userNumber = #{userNumber}
+	</select>
+
+	<!-- 根据用户编号查询新建用户账单表单中用户信息 -->
+	<select id="findNewUserBillByUserNumber"
+		parameterType="com.authine.cloudpivot.ext.queryVo.AccountCreationQueryVo"
+		resultMap="findAccountCreationMap">
+		select
+		*
+		from
+		${tableName1}
+		where
+		userNumber = #{userNumber}
+	</select>
+
+	<!-- 根据Pid查询建账表单中用户账单列表 -->
+	<select id="findAccountCreationBillsById"
+		parameterType="com.authine.cloudpivot.ext.queryVo.AccountCreationBillsQueryVo"
+		resultMap="findAccountCreationBillsMap">
+		select
+		*
+		from
+		${tableName1}
+		where
+		parentId = #{parentId}
+	</select>
+	<!-- 根据Pid查询新建用户账单中用户账单列表 -->
+	<select id="findNewUserBillsById"
+		parameterType="com.authine.cloudpivot.ext.queryVo.AccountCreationBillsQueryVo"
+		resultMap="findAccountCreationBillsMap">
+		select
+		*
+		from
+		${tableName1}
+		where
+		parentId = #{parentId}
+	</select>
+
+	<!-- 反销账中通过用户编号更新用户余额 -->
+	<update id="updateBalanceByUserNo"
+		parameterType="com.authine.cloudpivot.ext.vo.UserManagementVo">
+		UPDATE ${tableName1} SET balance = #{balance} WHERE
+		userNo = #{userNo}
+	</update>
+
+	<!-- 反销账中通过账单编号修改已销账金额 -->
+	<update id="updateWriteOffByBillNo"
+		parameterType="com.authine.cloudpivot.ext.vo.BillVo">
+		UPDATE ${tableName1} SET amountWrittenOff =
+		#{amountWrittenOff} WHERE billNo = #{billNo}
+	</update>
+
+	<!-- 根据用户编号批量编辑发票 -->
+	<update id="batchEditInvoice"
+		parameterType="com.authine.cloudpivot.ext.queryVo.BatchChargingRecordQueryrVo">
+		UPDATE ${tableName1} SET
+		invoiceNumber =
+		#{invoiceNumber},
+		invoiceType = #{invoiceType},
+		dateOfInvoice =
+		#{dateOfInvoice},
+		voucherNumber = #{voucherNumber},
+		remarksInformation =
+		#{remarksInformation}
+		WHERE userNo = #{userNo}
+	</update>
+
+	<!-- 批量编辑发票多条件查询用户信息 -->
+	<select id="findUserInfoBatchEditInvoice"
+		parameterType="com.authine.cloudpivot.ext.queryVo.BatchEditInvoiceQueryrVo"
+		resultMap="findUserInfoInBatchEditInvoiceMap">
+		select
+		us.userNo,
+		cu.customerName AS customerName,
+		us.userName,
+		ht.value
+		AS accountingCompany,
+		us.customerNo,
+		bu.amountOfSingleCharge,
+		bu.createdTime,
+		bu.invoiceNumber,
+		bu.invoiceType,
+		bu.dateOfInvoice,
+		bu.voucherNumber,
+		bu.remarksInformation,
+		bu.paymentType,
+		de.name AS dept,
+		bi.billNo,
+		bus.value AS businessType
+		from
+		${tableName1} us
+		left join
+		${tableName2} bu on us.userNo = bu.userNo
+		left join ${tableName3} bi on
+		bu.userNo = bi.userNo
+		left join ${tableName4} cu on us.customerName =
+		cu.id
+		left join ${tableName5} ht on us.accountingCompany = ht.id
+		left
+		join ${tableName6} bus on bi.businessType = bus.id
+		left join
+		h_org_department de on de.Id =
+		replace(JSON_EXTRACT(bi.dept,'$[0].id'),'"','')
+		where 1=1
+		<if test="userNo != null and userNo != ''">
+			and us.userNo like CONCAT('%',#{userNo},'%')
+		</if>
+		<if test="customerName != null and customerName != ''">
+			and cu.customerName like CONCAT('%',#{customerName},'%')
+		</if>
+		<if test="userName != null and userName != ''">
+			and us.userName like CONCAT('%',#{userName},'%')
+		</if>
+		<if test="invoiceNumber != null and invoiceNumber != ''">
+			and bu.invoiceNumber like CONCAT('%',#{invoiceNumber},'%')
+		</if>
+		<if test="accountingCompany != null and accountingCompany != ''">
+			and ht.value = #{accountingCompany}
+		</if>
+		<if test="businessType != null and businessType != ''">
+			and bus.value = #{businessType}
+		</if>
+
+		GROUP BY us.userNo
+
+	</select>
+
+	<!-- 添加建帐表单用户账单到账单表单中 -->
+	<insert id="addOperationDetails"
+		parameterType="com.authine.cloudpivot.ext.vo.RecordSheetVo">
+		INSERT INTO ${tableName1}(
+		invoiceNumber,voucherNumber,recordNumber,operationTime,
+		customerName,userNo,userName,firstOpeningDate,
+		userStatus,businessType,bandwidthType,rate,salesDepartment,
+		accountingCompany,computerRoomLocation,nodeNumber,
+		nodeName,invoice,operationtype,operatingAmount,balance,
+		costType,paymentType,billNumber,invoiceType,
+		dateOfInvoice,accountStartTime,accountEndTime,
+		operator,sale,customerService,remarks
+		) VALUES(
+		#{invoiceNumber},#{voucherNumber},#{recordNumber},#{operationTime},
+		#{customerName},#{userNo},#{userName},#{firstOpeningDate},#{userStatus},
+		#{businessType},#{bandwidthType},#{rate},#{salesDepartment},#{accountingCompany},
+		#{computerRoomLocation},#{nodeNumber},#{nodeName},#{invoice},#{operationtype},
+		#{operatingAmount},#{balance},#{costType},#{paymentType},#{billNumber},
+		#{invoiceType},#{dateOfInvoice},#{accountStartTime},#{accountEndTime},
+		#{operator},#{sale},#{customerService},#{remarks}
+		)
+	</insert>
+
+
+	<!-- 根据用户编号查询用户余额 -->
+	<select id="findBalanceByUserNo"
+		parameterType="com.authine.cloudpivot.ext.vo.UserManagementVo"
+		resultMap="UserManagementMap">
+		select
+		balance,
+		ht.value AS accountingCompany
+		from
+		${tableName1} us
+		left join
+		${tableName2} ht on us.accountingCompany =
+		ht.id
+		where
+		userNo =
+		#{userNo}
+	</select>
+
+	<!-- 根据用户编号查询用户信息(记录表) -->
+	<select id="findRecordInfoByUserNo"
+		parameterType="com.authine.cloudpivot.ext.vo.RecordSheetVo"
+		resultMap="findRecordInfoMap">
+		select
+		us.userNo AS userNo,
+		us.userName AS userName,
+		us.balance AS balance,
+		bu.value
+		AS businessType,
+		st.value AS
+		userStatus,
+		us.maturityDate AS
+		maturityDate,
+		de.name AS salesDepartments,
+		ht.value AS
+		accountingCompany,
+		us.customerNo AS customerNo,
+		cu.customerName AS
+		customerName,
+		us.itemNumber AS itemNumber,
+		us.firstOpeningDate,
+		co.AccessAddress AS
+		accessAddress,
+		co.CustomerNameHide AS
+		customerNameHide,
+		co.ServicePhone AS
+		servicePhone,
+		co.linkman AS linkman,
+		co.linkPhone AS linkPhone,
+		jr.value
+		AS conModeCode,
+		kd.value AS
+		bandwidthType,
+		co.ConSpeed AS rate,
+		co.HostRoomLocated AS
+		computerRoomLocation,
+		co.UpPointName AS nodeName,
+		de.name
+		AS dept,
+		bh.dateOfInvoice,
+		bh.invoiceType,
+		bh.paymentType,
+		bh.invoiceNumber AS
+		invoice,
+		user.name AS customerService
+		from ${tableName1}
+		us
+		left join
+		${tableName2} bi on bi.userNo =
+		us.userNo
+		left join
+		${tableName3} co on
+		co.id = bi.contractId
+		left join
+		${tableName4} bu on
+		us.businessCategory =
+		bu.Id
+		left join ${tableName5}
+		st on us.userStatus
+		= st.Id
+		left join
+		${tableName6} ht on
+		us.accountingCompany = ht.Id
+		left
+		join ${tableName7}
+		cu on
+		us.customerName = cu.Id
+		left join
+		${tableName8} jr on
+		co.ConModeCode =
+		jr.Id
+		left join ${tableName9} kd
+		on co.OnSpeedType =
+		kd.Id
+		left join ${tableName10} bh on
+		us.userNo = bh.userNo
+		left join
+		h_org_department de on de.Id =
+		replace(JSON_EXTRACT(us.salesDepartments,'$[0].id'),'"','')
+		left join
+		h_org_user user on user.Id =
+		replace(JSON_EXTRACT(co.serviceMan,'$[0].id'),'"','')
+		where
+		us.userNo =
+		#{userNo}
+	</select>
+
+	<select id="findContractVoById"
+		parameterType="com.authine.cloudpivot.ext.queryVo.ContractQueryVo"
+		resultType="com.authine.cloudpivot.ext.vo.ApplicationContractVO">
+		SELECT
+		c.AccessAddress accessAddress,
+		c.ConModeCode
+		conModeCode,
+		c.ConSpeed conSpeed,
+		c.OnSpeedType onSpeedType,
+		c.BusinessType businessType,
+		c.ContractAppType contractApprovalType,
+		cat.ContractTypeCode contractApprovalType,
+		c.ContractEnd contractEndDate,
+		c.projectNum projectNum,
+		c.ContractB contractB,
+		c.serviceMan serviceMan,
+		c.ServicePhone servicePhone,
+		c.linkman linkman,
+		c.linkPhone linkPhone,
+		c.UserName userNameId
+		FROM ${tableName1} c
+		left join ${tableName2} cat
+		on cat.id = c.ContractAppType
+		where c.id = #{id}
+	</select>
+
+	<update id="updateUserInfo"
+		parameterType="com.authine.cloudpivot.ext.vo.UserManagementVo">
+		update
+		${tableName1}
+		<set>
+			<if test="accessAddress != null">
+				accessAddress = #{accessAddress},
+			</if>
+			<if test="connectionMode != null">
+				connectionMode = #{connectionMode},
+			</if>
+			<if test="connectionRate != null">
+				connectionRate = #{connectionRate},
+			</if>
+			<if test="businessCategory != null">
+				businessCategory = #{businessCategory},
+			</if>
+			<if test="bandwidthType != null">
+				bandwidthType = #{bandwidthType},
+			</if>
+			<if test="accountingCompany != null">
+				accountingCompany = #{accountingCompany},
+			</if>
+			<if test="customerServices != null">
+				customerServices = #{customerServices},
+			</if>
+			<if test="kfMobilePhone != null">
+				kfMobilePhone = #{kfMobilePhone},
+			</if>
+			<if test="contactPerson != null">
+				contactPerson = #{contactPerson},
+			</if>
+			<if test="yhMobilePhone != null">
+				yhMobilePhone = #{yhMobilePhone},
+			</if>
+			<if test="itemNumber != null">
+				itemNumber = #{itemNumber},
+			</if>
+			<if test="userStatus != null">
+				userStatus = (select id from ${tableName2} where code =
+				#{userStatus}),
+			</if>
+			<if test="balance != null">
+				balance = #{balance},
+			</if>
+			<if test="changeType != null">
+				changeType = #{changeType},
+			</if>
+			<if test="effectiveDate != null">
+				effectiveDate = #{effectiveDate},
+			</if>
+			<if test="maturityDate != null">
+				maturityDate = #{maturityDate},
+			</if>
+		</set>
+		where
+		id=#{id}
+	</update>
+
+	<!-- 批量收费查询 -->
+	<select id="BulkChargingQuery"
+		parameterType="com.authine.cloudpivot.ext.queryVo.BulkChargingQueryVo"
+		resultMap="BulkChargingQueryMap">
+		select
+		us.userNo,
+		us.itemNumber,
+		us.userName,
+		st.value AS userStatus,
+		cu.customerName AS customerName,
+		us.balance,
+		ht.value AS
+		accountingCompany,
+		jr.value AS connectionMode,
+		kd.value AS
+		bandwidthType,
+		user.name AS customerServices,
+		us.kfMobilePhone,
+		us.contactPerson,
+		us.yhMobilePhone,
+		us.firstOpeningDate,
+		us.maturityDate,
+		bu.value AS businessType,
+		de.name AS
+		accountingDepartment
+		from
+		${tableName1} us
+		left join ${tableName2} st on
+		st.id = us.userStatus
+		left join ${tableName3} cu on cu.id =
+		us.customerName
+		left join ${tableName4} ht on ht.id =
+		us.accountingCompany
+		left join ${tableName5} jr on jr.id =
+		us.connectionMode
+		left join ${tableName6} kd on kd.id =
+		us.bandwidthType
+		left join ${tableName7} co on co.userName = us.id
+		left
+		join ${tableName8} bu on bu.id = co.BusinessType
+		left join h_org_user
+		user on user.Id =
+		replace(JSON_EXTRACT(us.customerServices,'$[0].id'),'"','')
+		left join
+		h_org_department de on de.Id =
+		replace(JSON_EXTRACT(co.AccountingDepartment,'$[0].id'),'"','')
+		where
+		1=1
+
+		<if test="userNo != null and userNo != ''">
+			and us.userNo like CONCAT('%',#{userNo},'%')
+		</if>
+		<if test="userName != null and userName != ''">
+			and us.userName like CONCAT('%',#{userName},'%')
+		</if>
+		<if test="itemNumber != null and itemNumber != ''">
+			and us.itemNumber like CONCAT('%',#{itemNumber},'%')
+		</if>
+		<if test="customerName != null and customerName != ''">
+			and cu.customerName like CONCAT('%',#{customerName},'%')
+		</if>
+		<if test="accountingCompany != null and accountingCompany != ''">
+			and ht.value = #{accountingCompany}
+		</if>
+		<if test="businessType != null and businessType != ''">
+			and bu.value = #{businessType}
+		</if>
+
+		GROUP BY us.userNo
+
+	</select>
+
+	<!-- 根据用户编号查询用户Id -->
+	<select id="findUserIdByUserNo"
+		parameterType="com.authine.cloudpivot.ext.vo.UserManagementVo"
+		resultMap="UserManagementMap">
+		select
+		id,accountingCompany
+		from
+		${tableName1}
+		where userNo =
+		#{userNo}
+	</select>
+
+	<!--根据账单编号查询入账公司id -->
+	<select id="findaccountingCompanyIdByBillNo"
+		parameterType="com.authine.cloudpivot.ext.vo.BillVo"
+		resultType="com.authine.cloudpivot.ext.vo.BillVo">
+		select
+		accountingCompany
+		from
+		${tableName1}
+		where
+		billNo =
+		#{billNo}
+	</select>
+
+	<select id="getUserManagementById"
+		parameterType="com.authine.cloudpivot.ext.queryVo.UserManagementQueryVo"
+		resultType="com.authine.cloudpivot.ext.vo.UserManagementVo">
+		select
+		id, accountingCompany, balance
+		from
+		${tableName1}
+		where
+		id = #{userId}
+	</select>
+
+
+
+	<select id="getUserAccountingCompany"
+		parameterType="com.authine.cloudpivot.ext.queryVo.UserAccountingCompanyQueryVo"
+		resultType="com.authine.cloudpivot.ext.vo.UserAccountingCompanyVo">
+		select
+		id, accountingCompanyId, balance
+		from
+		c_User_AccountingCompany
+		where
+		userId = #{userId} and
+		accountingCompanyId = #{accountingCompanyId} and
+		status = 0
+	</select>
+
+	<select id="findaccountingCompanyIdByUserId"
+		parameterType="com.authine.cloudpivot.ext.vo.UserAccountingCompanyVo"
+		resultType="com.authine.cloudpivot.ext.vo.UserAccountingCompanyVo">
+		select
+		accountingCompanyId
+		from
+		c_User_AccountingCompany
+		where
+		userId = #{userId} and status = 0
+	</select>
+
+	<insert id="insertUserAccountingCompany"
+		parameterType="com.authine.cloudpivot.ext.vo.UserAccountingCompanyVo">
+		INSERT INTO c_User_AccountingCompany(id, createdTime,
+		creater, userId, accountingCompanyId, balance, remark, status)
+		VALUES(#{id}, sysdate(), #{creater}, #{userId},
+		#{accountingCompanyId}, #{balance}, #{remark}, #{status})
+	</insert>
+
+	<update id="deleteUserAccountingCompany"
+		parameterType="com.authine.cloudpivot.ext.vo.UserAccountingCompanyVo">
+		update
+		c_User_AccountingCompany
+		set
+		status = #{status}
+		where
+		id = #{id}
+	</update>
+
+	<!--根据用户id及入账公司id修改用户表里的余额 -->
+	<update id="updateBalanceInUserManagement"
+		parameterType="com.authine.cloudpivot.ext.vo.UserManagementVo">
+		update
+		${tableName1}
+		set
+		balance = #{balance}
+		where
+		id =
+		#{id} and accountingCompany= #{accountingCompany}
+	</update>
+
+	<!--根据用户id及入账公司id修改记录表里的余额 -->
+	<update id="updateBalanceInAccountingCompany"
+		parameterType="com.authine.cloudpivot.ext.vo.UserAccountingCompanyVo">
+		update
+		c_User_AccountingCompany
+		set
+		balance = #{balance}
+		where
+		userId = #{userId} and accountingCompanyId=
+		#{accountingCompanyId} and status = 0
+	</update>
+	
+	
+	<!--根据用户id及入账公司id查询记录表里的用户余额 -->
+	<select id="findBalanceByUserIdAndACId"
+		parameterType="com.authine.cloudpivot.ext.vo.UserAccountingCompanyVo"
+		resultType="com.authine.cloudpivot.ext.vo.UserAccountingCompanyVo">
+		select
+		balance
+		from
+		c_User_AccountingCompany
+		where
+		userId =
+		#{userId} and accountingCompanyId= #{accountingCompanyId} and status =
+		0
+	</select>
+	
+		<!--根据用户编号及入账公司id查询用户表里的用户余额 -->
+	<select id="getBalanceByUserNoAndACId"
+		parameterType="com.authine.cloudpivot.ext.vo.UserManagementVo"
+		resultType="com.authine.cloudpivot.ext.vo.UserManagementVo">
+		select
+		balance,id
+		from
+		${tableName1}
+		where
+		userNo =
+		#{userNo} and accountingCompany= #{accountingCompany}
+	</select>
+	
+			<!--根据用户编号查询用户相关合同 -->
+	<select id="getContractsByUserNo"
+		parameterType="com.authine.cloudpivot.ext.vo.UserManagementVo"
+		resultType="com.authine.cloudpivot.ext.vo.ApplicationContractVO">
+		select
+		OldContractId AS oldContractId,
+		c.createdTime AS createdTime
+		from
+		${tableName1} c
+		left join ${tableName2} u on
+		c.userName = u.id
+		where
+		u.userNo =
+		#{userNo} and ContractAppType ='5fa7ec526c0c4e6190da548b5d9ced36' ORDER BY c.createdTime DESC limit 1
+	</select>
+	
+	
+
+</mapper>

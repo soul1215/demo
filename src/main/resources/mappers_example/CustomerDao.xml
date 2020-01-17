@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.authine.cloudpivot.ext.dao.CustomerDao">
+
+<!-- 批量插入操作    insertCustomerInfo -->
+<!-- json字符拼接    getCustomerInfos -->
+
+
+
+
+	<resultMap id="CustomerInfoMap"
+		type="com.authine.cloudpivot.ext.vo.CustomerInfoQueryVO">
+
+		<result column="customerName" property="customerName"
+			jdbcType="VARCHAR" />
+		<result column="industry" property="industry"
+			jdbcType="VARCHAR" />
+		<result column="mainBusiness" property="mainBusiness"
+			jdbcType="VARCHAR" />
+		<result column="companyAddress" property="companyAddress"
+			jdbcType="VARCHAR" />
+		<result column="creater" property="creater" jdbcType="VARCHAR" />
+		<result column="productType" property="productType"
+			jdbcType="VARCHAR" />
+		<result column="productSn" property="productSn"
+			jdbcType="VARCHAR" />
+		<result column="operator" property="operator"
+			jdbcType="VARCHAR" />
+
+	</resultMap>
+	<!-- 未启用 -->
+	<!-- 根据客户+产品查询客户信息 -->
+	<select id="getCustomerInfo"
+		resultType="com.authine.cloudpivot.ext.vo.CustomerInfoQueryVO">
+		SELECT distinct
+		bu.customer_name AS customerName,
+		ind.name AS industry,
+		bu.main_business AS mainBusiness,
+		bu.company_address AS companyAddress,
+		user.username AS creater,
+		co.product_type AS productType,
+		sku.name AS
+		productSn,
+		ac.operator AS operator
+		FROM
+		ikgh7_business AS bu
+		LEFT JOIN
+		iyq9j_model_contact_list co ON bu.id = co.business_id
+		LEFT
+		JOIN
+		i9oqq_accountManage ac ON ac.signed_customer = co.creater
+		LEFT
+		JOIN
+		i1dw5_industry ind ON ind.id = bu.industry
+		LEFT JOIN
+		ikcl8_product_sku
+		sku ON sku.id = co.product_sn
+		LEFT JOIN
+		h_org_user user ON user.id =
+		bu.creater
+		WHERE 1=1
+		<if
+			test="customerName != null and customerName != '' and customerName != 'null'">
+			and bu.customer_name like CONCAT('%',#{customerName},'%')
+		</if>
+		<if
+			test="productSn != null and productSn != '' and productSn != 'null' ">
+			and co.product_sn like CONCAT('%',#{productSn},'%')
+		</if>
+	</select>
+	<!-- 插入客户信息 -->
+	<insert id="insertCustomerInfo" parameterType="java.util.List">
+
+		INSERT INTO ikgh7_userInformationQuery(
+		id,createdTime,
+		main_business,company_address,full_insurance,customer_name,
+		industry,customer_protection,sign_the_bill)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id},#{item.createdTime},#{item.mainBusiness},#{item.companyAddress},#{item.fullInsurance},
+			#{item.customerName},#{item.industry},#{item.customerProtection},
+			#{item.signTheBill})
+		</foreach>
+	</insert>
+	
+	
+	<!-- 将客户信息按添加时间排序  -->
+	<select id="getCustomerInfoByLatestTime"
+	resultType="com.authine.cloudpivot.ext.vo.CustomerInfoQueryVO"
+	>
+		SELECT 
+		id 
+		 FROM ikgh7_userInformationQuery ORDER BY createdTime DESC
+	</select>
+	
+	
+	<!--查询客户 信息 -->
+	<select id="getCustomerInfos"
+		resultType="com.authine.cloudpivot.ext.vo.CustomerInfoQueryVO">
+		SELECT
+		bu.createdTime AS createdTime,
+		bu.customer_name AS
+		customerName,
+		ind.name AS
+		industry,
+		bu.main_business AS mainBusiness,
+		CONCAT
+		(JSON_UNQUOTE(JSON_EXTRACT (bu.company_address,
+		'$.provinceName')),
+		JSON_UNQUOTE(JSON_EXTRACT (bu.company_address,
+		'$.cityName'))
+		)
+		AS companyAddress,
+		user.username AS fullInsurance,
+		CONCAT_WS(':',CONCAT_WS('-',co.product_type,sku.name),user.username)
+		AS
+		customerProtection,
+		CONCAT_WS(':',CONCAT_WS('-',co.product_type,sku.name),user.username,gu.name)
+		AS
+		signTheBill
+		FROM
+		ikgh7_business AS bu
+		LEFT JOIN
+		iyq9j_model_contact_list
+		co ON bu.id = co.business_id
+		LEFT JOIN
+		ikgh7_SignedUserModel
+		si ON si.creater = co.creater
+
+
+		LEFT JOIN i9oqq_accountManage
+		ac ON ac.signed_customer = si.id
+
+		LEFT JOIN i1dw5_industry ind ON
+		ind.id = bu.industry
+		LEFT JOIN
+		ikcl8_product_sku sku ON sku.id = co.product_sn
+		LEFT JOIN h_org_user
+		user ON user.id = bu.creater
+
+		LEFT JOIN
+		h_org_user gu
+		on gu.Id =
+		replace(JSON_EXTRACT(ac.operator,'$[0].id'),'"','')
+
+
+		GROUP BY customerName order
+		by bu.createdTime DESC
+
+	</select>
+
+	<!-- 清空客户信息查询模型列表 -->
+
+	<update id="truncateTable">
+		TRUNCATE TABLE ikgh7_userInformationQuery
+	</update>
+
+	<!-- 将已签单用户信息批量插入到已签单数据模型表中 -->
+	<insert id="insertSignBillInfo" parameterType="java.util.List">
+
+		INSERT INTO ikgh7_SignedUserModel(
+
+		creater,createdDeptId,owner,ownerDeptId,
+		id,name,
+		customer_name,customer_type,product,
+		date_signing,product_type,
+		company_address,industry,
+		operation_industry,contacts,
+		contact_number,accumulated_amount,
+		salesman,user_attribution,productSN)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.creater},#{item.createdDeptId},#{item.owner},#{item.ownerDeptId},
+			#{item.id},#{item.customerName},#{item.customerName},#{item.customerType},#{item.product},
+			#{item.signingDate},#{item.productType},
+			#{item.area},#{item.industry},
+			#{item.operatingIndustry},#{item.contactPerson},
+			#{item.contactNumber},#{item.paymentAmount},
+			#{item.salesperson},#{item.userArchive},#{item.productSN})
+		</foreach>
+	</insert>
+
+
+	<!--根据客户编码查询客户信息(已签单用户信息)  -->
+	<!-- 未启用 -->
+	<select id="getCustomerInfoBycode"
+		resultType="com.authine.cloudpivot.ext.vo.ModelContactListVo">
+		SELECT DISTINCT
+		co.creater AS creater,
+		co.createdDeptId AS
+		createdDeptId,
+		co.owner AS owner,
+		co.ownerDeptId AS ownerDeptId,
+		bu.customer_name AS customerName,
+		bu.customer_type AS customerType,
+		ind.name AS industry,
+		CONCAT
+		(JSON_UNQUOTE(JSON_EXTRACT
+		(bu.company_address, '$.provinceName')),
+		JSON_UNQUOTE(JSON_EXTRACT
+		(bu.company_address, '$.cityName'))
+		)
+		AS area,
+		user.username AS
+		salesperson,
+		bu.intent_product AS operatingIndustry,
+		co.product_type AS
+		productType,
+		sku.name AS product,
+		bu.defaultContactName AS
+		contactPerson,
+		bu.defaultContactNumber AS contactNumber,
+		bu.customer_type AS userArchive
+		FROM
+		ikgh7_business AS bu
+		LEFT JOIN
+		iyq9j_model_contact_list co ON bu.id = co.business_id
+		LEFT JOIN
+		i9xso_model_contact_store st ON bu.id = st.business_id
+		LEFT JOIN
+		i1dw5_industry ind ON
+		ind.id = bu.industry
+		LEFT JOIN h_org_user user ON
+		user.id = bu.creater
+		LEFT JOIN
+		ikcl8_product_sku sku ON sku.id =
+		co.product_sn
+		WHERE st.customer_code = #{customerCode} order
+		by
+		st.createdTime DESC
+	</select>
+
+	<!--根据客户编码查询客户信息(已签单用户信息)  -->
+	<select id="getCustomerInfoByBusinessId"
+		resultType="com.authine.cloudpivot.ext.vo.ModelContactListVo">
+		SELECT
+		st.creater AS creater,
+		st.createdDeptId AS
+		createdDeptId,
+		st.owner AS owner,
+		st.ownerDeptId AS ownerDeptId,
+		bu.customer_name AS customerName,
+		bu.customer_type AS customerType,
+		NOW() AS createdTime,
+		y.name AS industry,
+		bu.company_address AS area,
+		bu.createdTime AS signingDate,
+		u.name AS salesperson,
+		bu.intent_product_map AS product,
+		bu.intend_product_type AS productType,
+		bu.defaultContactName AS contactPerson,
+		bu.defaultContactNumber AS contactNumber,
+		bu.productSN AS productSN,
+		bu.customer_type AS
+		userArchive,
+		st.business_id
+		FROM
+		ikgh7_business AS bu
+		LEFT JOIN
+		i9xso_model_contact_store st ON bu.id = st.rel_customer
+		LEFT JOIN
+		h_org_user u ON bu.creater = u.id
+		LEFT JOIN i1dw5_industry y ON
+		bu.industry = y.id
+		WHERE st.business_id = #{businessId}
+		and st.id =
+		#{id}
+	</select>
+
+</mapper>

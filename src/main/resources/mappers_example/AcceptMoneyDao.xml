@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.authine.cloudpivot.ext.dao.AcceptMoneyDao">
+
+<!-- 批量更新操作    updateRecognitioStatusupdateByIds-->
+
+	<!-- 退款后修改认款状态 (-1 已认款) -->
+	<update id="updateById"
+		parameterType="com.authine.cloudpivot.ext.vo.AcceptMoneyQueryVO">
+
+		UPDATE
+		i9xso_accept_money
+		SET recognitio_status = -1
+		WHERE id = #{id}
+
+	</update>
+	<!-- 根据id查询认款状态 -->
+	<select id="selectRecognitioStatus"
+		resultType="com.authine.cloudpivot.ext.vo.AcceptMoneyQueryVO">
+		SELECT
+		recognitio_status AS recognitionStatus,customer_name AS customerName
+		FROM
+		i9xso_accept_money
+		WHERE id = #{id}
+
+	</select>
+
+
+	<!-- 退款后批量修改认款状态 (-1 已认款) -->
+
+	<update id="updateRecognitioStatusupdateByIds"
+		parameterType="com.authine.cloudpivot.ext.vo.AcceptMoneyQueryVO">
+
+
+		UPDATE i9xso_accept_money set recognitio_status = -1 where id in
+
+		<foreach collection="list" item="item" open="(" separator=","
+			close=")">
+			#{item.id}
+		</foreach>
+
+	</update>
+
+</mapper>
